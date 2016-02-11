@@ -5,6 +5,9 @@
     <base href="/">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="/bower_components/ng-sortable/dist/ng-sortable.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/bower_components/ng&#45;sortable/dist/ng&#45;sortable.style.css"> -->
   </head>
   <body ng-app="drag-example">
     <h1>Smoke {{ "Ri" + "ses" }}</h1>
@@ -16,18 +19,24 @@
         <thead>
           <th>Name</th>
           <th>Price</th>
+          <th>$index</th>
+          <th>Position</th>
         </thead>
-        <tbody>
-          <tr ng-repeat="item in items">
-            <td>{{ item.name }}</td>
+        <tbody ng-model="items" as-sortable="dragListeners">
+          <tr ng-repeat="item in items" as-sortable-item>
+            <td as-sortable-item-handle>{{ item.name }}</td>
             <td>{{ item.price }}</td>
+            <td>{{ $index }}</td>
+            <td>{{ item.position }}</td>
           </tr>
         </tbody>
       </table>
 
     </div>
 
+    <script src="/bower_components/lodash/dist/lodash.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/ng-sortable/dist/ng-sortable.js"></script>
     <script src="/drag-example.js"></script>
 
   </body>
