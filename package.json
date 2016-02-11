@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "static": "~2.0.0"
+    "node-static": "~0.7.7"
   }
 }
