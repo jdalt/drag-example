@@ -1,0 +1,19 @@
+{
+  "name": "sortable-example",
+  "version": "0.0.0",
+  "authors": [
+    "Jacob Dalton <jacob.dalton@sportngin.com>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.2.17"
+  }
+}
