@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drag Example</title>
+    <base href="/">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      ul[dnd-list], ul[dnd-list] > li {
+        position: relative;
+      }
+
+      ul {
+        list-style: none;
+        width: 306px;
+        border: 1px solid red;
+        margin: 1em 0 1em 150px;
+        padding: 2px;
+        float: left;
+      }
+
+      ul li {
+        background-color: #444,
+        margin: 2px;
+        padding: 2px;
+        border: 1px solid black;
+        display: inline-block;
+        width: 300px;
+      }
+
+      .select { background-color: yellow }
+      .target { background-color: #eef }
+    </style>
+
+  </head>
+  <body ng-app="drag-example">
+    <h1>Smoke {{ "Ri" + "ses" }}</h1>
+
+    <div ng-controller="main-ctrl">
+      <ul>
+        <li
+          ng-repeat="item in list"
+          dnd-draggable="item"
+          dnd-moved="mark()"
+          dnd-copied="mark()"
+          dnd-cancel="mark()"
+          dnd-effect-allowed="copy"
+          dnd-selected="models.selected = item"
+          ng-class="{'selected': models.selected === item}">{{ item.name }}</li>
+      </ul>
+
+      <ul>
+        <li ng-repeat="targetItem in targetList">
+          <div
+            class="target"
+            dnd-list="itemTarget"
+            dnd-drop="deadDrop(item, targetItem)"
+            >Target</div>
+          <div><pre>{{ targetItem | json:2 }}</pre></div>
+        </li>
+      </ul>
+    </div>
+
+    <script src="/bower_components/lodash/dist/lodash.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+    <script src="/dnd.js"></script>
+
+  </body>
+</html>
+
