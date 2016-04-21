@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drag Example</title>
+    <base href="/">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      ul, ol {
+        list-style: none;
+      }
+
+      li {
+        margin: 0;
+        padding: 0;
+      }
+
+      ul[dnd-list], ul[dnd-list] > li {
+        position: relative;
+      }
+
+      ul {
+        list-style: none;
+        width: 306px;
+        margin: 1em 0 1em 150px;
+        padding: 2px;
+        float: left;
+      }
+
+      #source li {
+        background-color: #444;
+        height: 75px;
+        margin: 2px;
+        padding: 2px;
+        border: 1px solid black;
+        display: inline-block;
+        width: 300px;
+      }
+
+      .increment-zone {
+        position: relative;
+        height: 25px;
+        border: 1px solid black;
+      }
+
+      .dndDragover .drop-zone {
+        background-color: yellow;
+      }
+
+      .drop-zone {
+        position: absolute;
+        height: 25px;
+        margin: 0;
+        padding: 0;
+      }
+
+      #source .dndDraggingSource {
+        background-color: green;
+      }
+
+      .scheduled-game {
+        background-color: red;
+        height: 25px;
+      }
+
+      .game-owner {
+        z-index: 10000;
+        position: absolute;
+        background-color: blue;
+        width: 100%;
+      }
+
+      .select { background-color: yellow }
+      .target { background-color: #eef }
+    </style>
+
+  </head>
+  <body ng-app="drag-example">
+
+    <div ng-controller="main-ctrl">
+
+      <style>
+        .dndDragover .drop-zone {
+          height: {{ gameSteps * 25 }}px;
+        }
+      </style>
+
+      <ul id="source">
+        <li
+          ng-repeat="game in gameList"
+          dnd-dragstart="setGameDuration(game)"
+          dnd-draggable="game">{{ game.away_seed }} @ {{ game.home_seed }}</li>
+      </ul>
+
+      <ul style="position: relative">
+        <li class="increment-zone" ng-repeat="increment in incrementList"
+          dnd-list="incrementTarget"
+          dnd-disable-if="increment.game"
+          dnd-drop="deadDrop(item, increment)">
+
+          <div ng-if="increment.ownsGame"
+            class="game-owner"
+            style="height: {{ (increment.game.duration * 25)/15 }}px">
+            <span>{{ increment.game.away_seed }} @ {{ increment.game.home_seed }} ({{ increment.game.duration }})</span>
+            <span ng-click=removeGame(increment.game) style="float: right">X</span>
+          </div>
+
+          <ul class="drop-zone">
+            <li ng-class="{ 'scheduled-game': increment.game }">{{ increment.minute }}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <script src="/bower_components/lodash/dist/lodash.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+    <script src="/dnd.js"></script>
+
+  </body>
+</html>
+
