@@ -40,7 +40,7 @@
 
       .increment-zone {
         position: relative;
-        height: 25px;
+        height: 23px;
         border: 1px solid black;
       }
 
@@ -86,6 +86,10 @@
         }
       </style>
 
+      <label for=time-step">Time Step</label>
+      <input id="time-step" type="number" ng-model="timeStep" />
+      <button ng-click="rebuildIncrements()">Rebuild Increments</button>
+
       <ul id="source">
         <li
           ng-repeat="game in gameList"
@@ -101,7 +105,7 @@
 
           <div ng-if="increment.ownsGame"
             class="game-owner"
-            style="height: {{ (increment.game.duration * 25)/15 }}px">
+            style="height: {{ (increment.game.duration * 25)/timeStep }}px">
             <span>{{ increment.game.away_seed }} @ {{ increment.game.home_seed }} ({{ increment.game.duration }})</span>
             <span ng-click=removeGame(increment.game) style="float: right">X</span>
           </div>

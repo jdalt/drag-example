@@ -23,20 +23,28 @@ angular.module('drag-example')
   ]
 
 
-  $scope.incrementList = []
-  var startTime = 320
-  var timeSlotDuration = 360
-  var timeStep = 15
-  var steps = timeSlotDuration/timeStep
 
-  _.times(steps, function(index) {
-    $scope.incrementList.push({
-      duration: timeStep,
-      minute: (index * timeStep + startTime)
+
+  $scope.timeStep = 30
+
+  $scope.rebuildIncrements = function() {
+    var startTime = 320
+    var timeSlotDuration = 720
+    var steps = timeSlotDuration/$scope.timeStep
+    $scope.incrementList = []
+
+    _.times(steps, function(index) {
+      $scope.incrementList.push({
+        duration: $scope.timeStep,
+        minute: (index * $scope.timeStep + startTime)
+      })
     })
-  })
+  }
+
+  $scope.rebuildIncrements()
 
   $scope.deadDrop = function(gameDrop, targetItem) {
+    // TODO: make sure dropable
     console.log('dropItem', gameDrop, 'targetItem', targetItem)
     targetItem.ownsGame = true
 
@@ -64,7 +72,7 @@ angular.module('drag-example')
   }
 
   $scope.setGameDuration = function(game) {
-    $scope.gameSteps = game.duration / timeStep
+    $scope.gameSteps = game.duration / $scope.timeStep
   }
 
   $scope.mark = function() {
